@@ -6,7 +6,6 @@ import java.util.concurrent.TimeUnit;
 
 import javax.swing.JOptionPane;
 import java.awt.EventQueue;
-import java.awt.Point;
 import java.awt.Rectangle;
 import java.io.File;
 import java.net.HttpURLConnection;

@@ -20,7 +20,7 @@ public int amount;
 		this.amount = amount;
 		this.color = Color.GRAY;
 		
-//		URL file = Game_Main.class.getClassLoader().getResource("com/jack/images/ammo_pack.bmp");
+//		URL file = Game_Main.class.getClassLoader().getResource("/images/ammo_pack.bmp");
 //		try {
 //			this.image = ImageIO.read(new File(file.toString().substring(6)));
 //		} catch (IOException e) {

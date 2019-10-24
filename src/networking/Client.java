@@ -1,13 +1,10 @@
 package networking;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
 import gameObjects.Player;
-
 
 public class Client {
 	

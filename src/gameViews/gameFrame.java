@@ -1,6 +1,5 @@
 package gameViews;
 
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -9,11 +8,7 @@ import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
 
-
-
-//--
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
@@ -21,11 +16,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.SimpleAttributeSet;
@@ -67,9 +57,7 @@ public class gameFrame {
 //		});
 //	}
 
-	/**
-	 * Create the application.
-	 */
+
 	public gameFrame() {
 		initialize();
 		initPlayerEvents();
@@ -77,9 +65,6 @@ public class gameFrame {
 		initEvents();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		frame = new JFrame();
 		//frame.setBounds(100, 100, 696, 581);
