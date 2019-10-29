@@ -32,4 +32,9 @@ public class BreakableBoundary extends Boundary{
 	public int getHealth(){
 		return health;
 	}
+	public void destroy()
+	{
+		this.color = new Color(255, 0, 0);
+		//DropStrategy
+	}
 }

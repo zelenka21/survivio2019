@@ -113,7 +113,7 @@ public class GameView extends JPanel {
 		g2.drawString("Ammo: ", 10, 40);
 
 		// FPS
-	//	g2.drawString("FPS: " + fps, 640, 20);
+		g2.drawString("FPS: " + fps, 640, 20);
 		g2.drawString("Map: " + Game_Main.map.name, 620, 40);
 
 	}

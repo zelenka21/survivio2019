@@ -132,6 +132,11 @@ private static void tick() {
 							BreakableBoundary bound = (BreakableBoundary) boundary;
 							if(Util.intersects(new Rectangle(proj.nPos.x, proj.nPos.y, proj.sizeX, proj.sizeY), bound)) {
 								bound.takeDamage(proj.damage);
+								if(bound.getHealth() <= 1) {
+									bound.destroy();
+									//dropStrategy
+								}
+								
 								if(bound.getHealth() <= 0) {
 									map.boundaries.remove(p);
 								}
