@@ -22,6 +22,7 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 
+import gameObjects.LazyThreadSafeSingleton;
 import gameObjects.Player;
 import gameObjects.Projectile;
 import util.Util;
@@ -72,7 +73,6 @@ public class gameFrame {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		
 		gameView = new GameView();
 		gameView.setBounds(10, 10, 700, 700);
 		frame.getContentPane().add(gameView);
@@ -102,6 +102,9 @@ public class gameFrame {
 		frame.getContentPane().add(connectButton);
 	}
 private void initPlayerEvents() {
+
+
+		LazyThreadSafeSingleton ltss = LazyThreadSafeSingleton.getInstance();
 		
 		gameView.addKeyListener(new KeyAdapter() {
 			
@@ -127,6 +130,7 @@ private void initPlayerEvents() {
 				Projectile proj = new Projectile(Game_Main.player, Game_Main.player.cPos, mouse.getPoint());
 				Game_Main.player.shoot(proj);
 				Game_Main.player.connection.echoProjectile(proj);
+				ltss.log("Projectile shot by " + Game_Main.player.username + "\n");
 			}
 		});
 		
@@ -151,7 +155,6 @@ private void initEvents() {
 		@Override
 		public void mouseDragged(MouseEvent arg0) {
 			// TODO Auto-generated method stub
-
 		}
 
 		@Override
@@ -200,7 +203,6 @@ private void initEvents() {
 		public void keyPressed(KeyEvent key){
 			
 			if(key.getKeyCode() == KeyEvent.VK_ENTER) {
-				
 				chatTextPane.setEditable(true);
 				String message = chatTextField.getText();
 				appendToPane(chatTextPane, Game_Main.player.username, Game_Main.player.color);
@@ -208,7 +210,6 @@ private void initEvents() {
 				Game_Main.player.connection.echoChat(message);
 				chatTextField.setText("");
 				chatTextPane.setEditable(false);
-				
 			}
 		}
 		
