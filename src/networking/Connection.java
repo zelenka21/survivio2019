@@ -85,7 +85,7 @@ public class Connection {
 			echoPosition();
 			echoListen();
 			chatListen();
-			
+
 			Game_Main.window.connectionTextArea.append("Connected to server!\n");
 		}
 	}
