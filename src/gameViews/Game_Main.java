@@ -16,6 +16,10 @@ import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import Decorator.DecoratedPlayer;
+import Decorator.PlayerShape;
+import Decorator.PlayerSizer;
+import Decorator.PlayerSkin;
 import gameObjects.AmmoPack;
 import gameObjects.Boundary;
 import gameObjects.BreakableBoundary;
@@ -35,6 +39,8 @@ public class Game_Main {
 	public static Player player;
 	
 	public volatile static ArrayList<Player> players;
+	public volatile static ArrayList<DecoratedPlayer> decPlayers;
+	
 	
 	public static Map map;
 	
@@ -46,8 +52,14 @@ public class Game_Main {
         String userN = JOptionPane.showInputDialog(null, "Enter Username: ");
   
 		
-		player = new Player(userN, Color.BLUE, new Connection());
+		player = new Player(userN, new Connection());
 		
+		
+		DecoratedPlayer playerD = new PlayerShape(new PlayerSizer(new PlayerSkin(new Player(userN, new Connection()))));
+		playerD.setFancyColor("yellow");
+		
+		decPlayers = new ArrayList<DecoratedPlayer>();
+		decPlayers.add(playerD);
 		players = new ArrayList<Player>();
 		
 		players.add(player);

@@ -2,6 +2,7 @@ package gameViews;
 
 import javax.swing.JPanel;
 
+import Decorator.DecoratedPlayer;
 import gameObjects.Boundary;
 import gameObjects.Item;
 import gameObjects.Player;
@@ -9,6 +10,7 @@ import gameObjects.Projectile;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.Color;
 
 public class GameView extends JPanel {
@@ -29,6 +31,8 @@ public class GameView extends JPanel {
 		drawItems(g2);
 
 		drawPlayers(g2);
+		
+		drawDecoPlayers(g2);
 
 		drawProjectiles(g2);
 
@@ -131,6 +135,33 @@ public class GameView extends JPanel {
 			g2.fillRect(player.cPos.x, player.cPos.y, 10, 10);
 			g2.setColor(Color.BLACK);
 			g2.drawRect(player.cPos.x, player.cPos.y, 10, 10);
+
+		}
+	}
+	public void drawDecoPlayers(Graphics2D g2) {
+		for (DecoratedPlayer player : Game_Main.decPlayers) {
+
+//			if (player.shield.on) {
+//				g2.setColor(player.shield.color);
+//				g2.fillOval((player.cPos.x + 5) - player.shield.delta, (player.cPos.y + 5) - player.shield.delta,
+//						player.shield.delta * 2, player.shield.delta * 2);
+//			}
+
+			//player.setFancyColor("yellow");
+			g2.setColor(player.getColor());
+			//g2.setColor(Color.BLACK);
+			//g2.fillRect(400, 400, player.getDsize(), player.getDsize());
+//			if( player.getSpecialShape()==1)
+//			{
+//
+			g2.fillOval(400, 400, player.getDsize(), player.getDsize());
+//			}
+
+			player.setFancyColor("orange");
+			g2.setColor(Color.BLACK);
+			//g2.drawRect(400, 400, 10, 10);
+
+			g2.drawOval(400, 400, 10, 10);
 
 		}
 	}

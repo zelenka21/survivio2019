@@ -198,7 +198,7 @@ public class Connection {
 							String username = client.echoIn.nextLine();
 							String color = client.echoIn.nextLine();
 							
-							Game_Main.players.add(new Player(username, Color.getColor(color, Color.RED), null));
+							Game_Main.players.add(new Player(username, null));
 							
 						} else if (cmd.equals(RefStrings.CMD_UPDATEPOSITION)) {
 							

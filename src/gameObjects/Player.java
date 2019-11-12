@@ -2,6 +2,7 @@ package gameObjects;
 
 import java.util.ArrayList;
 
+import Decorator.DecoratedPlayer;
 import gameViews.Game_Main;
 import networking.Connection;
 import util.Util;
@@ -13,7 +14,7 @@ import java.awt.Point;
 import java.awt.event.KeyEvent;
 
 
-public class Player {
+public class Player implements DecoratedPlayer{
 
 	
 	
@@ -39,9 +40,9 @@ public class Player {
 	public Point cPos;
 	public Point pPos;
 	
-	public Player(String username, Color color, Connection connection) {
+	public Player(String username, Connection connection) {
 		this.username = username;
-		this.color = color;
+		this.color = Color.BLUE;
 		this.connection = connection;
 		this.showMiniHUD = true;
 		
@@ -61,6 +62,29 @@ public class Player {
 		left = false;
 		right = false;
 	}
+	@Override
+	public void setColor(Color color) {
+		// TODO Auto-generated method stub
+		this.color=color;
+	}
+	public void setColor(String color) {
+		switch (color) {
+		case "orange":
+			this.color = Color.orange;
+			break;
+		case "black":
+			this.color = Color.black;
+			break;
+		case "yellow":
+			this.color = Color.yellow;
+			break;
+		default:
+		    this.color = Color.gray;
+		    break;
+
+		}
+	}
+	
 
 	public void setSpeed(int speed) {
 		this.speed = speed;
@@ -177,6 +201,23 @@ public class Player {
 		}
 		updateMovement();
 	}
+	@Override
+	public void setFancyColor(String color) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public Color getColor() {
+		return this.color;
+		
+	}
+	@Override
+	public int getDsize() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+
 	
 	
 }
