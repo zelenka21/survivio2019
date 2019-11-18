@@ -9,11 +9,7 @@ public class PlayerSizer extends Decorator{
 		super(dplayer);
 	}
 
-	@Override
-	public void setFancyColor(String color) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 	@Override
 	public Color getColor() {
@@ -21,7 +17,6 @@ public class PlayerSizer extends Decorator{
 		return this.fancyColor;
 	}
 
-	@Override
 	public int getDsize() {
 		return specialSize;
 	}

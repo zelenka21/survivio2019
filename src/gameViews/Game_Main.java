@@ -55,11 +55,17 @@ public class Game_Main {
 		player = new Player(userN, new Connection());
 		
 		
-		DecoratedPlayer playerD = new PlayerShape(new PlayerSizer(new PlayerSkin(new Player(userN, new Connection()))));
-		playerD.setFancyColor("yellow");
+		//DecoratedPlayer playerD = new PlayerShape(new PlayerSizer(new PlayerSkin(new Player(userN, new Connection()))));
+
+//		DecoratedPlayer playerD = new PlayerSkin(new Player(userN, new Connection()));
+//		playerD.setFancyColor("yellow");
+//		DecoratedPlayer playerDD = new PlayerSizer(playerD);
+//		playerDD.getDsize();
+//		//playerD.setFancyColor("yellow");
+//		
+//		decPlayers = new ArrayList<DecoratedPlayer>();
+//		decPlayers.add(playerDD);
 		
-		decPlayers = new ArrayList<DecoratedPlayer>();
-		decPlayers.add(playerD);
 		players = new ArrayList<Player>();
 		
 		players.add(player);

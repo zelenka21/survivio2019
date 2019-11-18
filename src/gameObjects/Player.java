@@ -201,21 +201,13 @@ public class Player implements DecoratedPlayer{
 		}
 		updateMovement();
 	}
-	@Override
-	public void setFancyColor(String color) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 	@Override
 	public Color getColor() {
 		return this.color;
 		
 	}
-	@Override
-	public int getDsize() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	
 	
 
 	

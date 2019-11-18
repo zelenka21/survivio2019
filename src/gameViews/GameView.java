@@ -3,6 +3,9 @@ package gameViews;
 import javax.swing.JPanel;
 
 import Decorator.DecoratedPlayer;
+import Decorator.PlayerShape;
+import Decorator.PlayerSizer;
+import Decorator.PlayerSkin;
 import gameObjects.Boundary;
 import gameObjects.Item;
 import gameObjects.Player;
@@ -74,6 +77,8 @@ public class GameView extends JPanel {
 				g2.drawRect(player.cPos.x - 50 + 5, player.cPos.y - 40 + 15, 100, 10);
 
 				g2.drawString(player.username, player.cPos.x - 50 + 5, player.cPos.y - 40);
+				
+			
 			}
 		}
 	}
@@ -139,7 +144,7 @@ public class GameView extends JPanel {
 		}
 	}
 	public void drawDecoPlayers(Graphics2D g2) {
-		for (DecoratedPlayer player : Game_Main.decPlayers) {
+		//for (DecoratedPlayer player : Game_Main.decPlayers) {
 
 //			if (player.shield.on) {
 //				g2.setColor(player.shield.color);
@@ -147,23 +152,57 @@ public class GameView extends JPanel {
 //						player.shield.delta * 2, player.shield.delta * 2);
 //			}
 
-			//player.setFancyColor("yellow");
-			g2.setColor(player.getColor());
-			//g2.setColor(Color.BLACK);
-			//g2.fillRect(400, 400, player.getDsize(), player.getDsize());
+		//	player.setFancyColor("yellow");
+			//g2.setColor(player.getColor());
+		//	g2.setColor(player.getColor());
+			
+		//	g2.fillRect(400, 400, 10, 10);
 //			if( player.getSpecialShape()==1)
 //			{
 //
-			g2.fillOval(400, 400, player.getDsize(), player.getDsize());
+			//g2.fillOval(400, 400, player.getDsize(), player.getDsize());
 //			}
 
-			player.setFancyColor("orange");
-			g2.setColor(Color.BLACK);
+			//player.setFancyColor("orange");
+			//g2.setColor(Color.BLACK);
 			//g2.drawRect(400, 400, 10, 10);
 
-			g2.drawOval(400, 400, 10, 10);
+			//g2.drawOval(400, 400, 10, 10);
+			
+			
+			//new implementation
+			int shape = 0;
+			
+			PlayerSkin playerD = new PlayerSkin(new Player("deco", null));
+			playerD.setFancyColor("orange");
+			Color pColor = playerD.getColor();
+			
+			PlayerSizer playerDD = new PlayerSizer(playerD);
+			int size = playerDD.getDsize();
+			g2.setColor(pColor);
+			
+			
+			PlayerShape playerDDD = new PlayerShape(playerDD);
+			shape = playerDDD.getSpecialShape();
+			if(shape==0) {
+				g2.fillRect(400, 400, size, size);
+				g2.drawRect(400, 400, size, size);
+			}
+			else
+			{
+				g2.fillOval(400, 400, size, size);
+				g2.drawOval(400, 400, size, size);
+			}
+			
+			
+//			DecoratedPlayer playerDD = new PlayerSizer(playerD);
+//			playerDD.getDsize();
+//			//playerD.setFancyColor("yellow");
+//			
+//			decPlayers = new ArrayList<DecoratedPlayer>();
+//			decPlayers.add(playerDD);
 
-		}
+		//}
 	}
 
 	public void drawProjectiles(Graphics2D g2) {

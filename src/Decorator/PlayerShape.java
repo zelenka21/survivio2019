@@ -9,10 +9,6 @@ public class PlayerShape extends Decorator{
 		super(dplayer);
 	}
 
-	@Override
-	public void setFancyColor(String color) {
-		
-	}
 
 	@Override
 	public Color getColor() {
@@ -20,7 +16,7 @@ public class PlayerShape extends Decorator{
 		return this.fancyColor;
 	}
 
-	@Override
+	
 	public int getDsize() {
 		// TODO Auto-generated method stub
 		return 0;

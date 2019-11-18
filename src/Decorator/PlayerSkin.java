@@ -40,9 +40,5 @@ public class PlayerSkin extends Decorator{
 		return this.fancyColor;
 	}
 
-	@Override
-	public int getDsize() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	
 }
