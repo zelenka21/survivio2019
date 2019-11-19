@@ -8,10 +8,9 @@ import gameObjects.Player;
 public class DropAmmo implements IDropStrategy{
 
 	@Override
-	public void dropItem(Item item, Map map, Player eplayer) {
-		// TODO Auto-generated method stub
-		map.items.add(new AmmoPack(eplayer.cPos.x+25, eplayer.cPos.y-43, 5));
+	public void dropItem(Item item, Map map, Player eplayer, int erx, int ery) {
+		// 
+		map.items.add(new AmmoPack(eplayer.cPos.x+erx, eplayer.cPos.y-ery, 5));
 
 	}
- //soon
 }

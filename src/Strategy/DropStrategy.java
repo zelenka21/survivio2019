@@ -12,7 +12,7 @@ public class DropStrategy {
 		//IDropStrategy dropHealth = IDropStrategy.dropHealth();
 		//IDropStrategy dropAmmo = IDropStrategy.dropAmmo();
 		
-		
+		//implemented in Game_Main
 		
 	}
 

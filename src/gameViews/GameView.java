@@ -2,6 +2,7 @@ package gameViews;
 
 import javax.swing.JPanel;
 
+import Adapter.IHealth;
 import Decorator.DecoratedPlayer;
 import Decorator.PlayerShape;
 import Decorator.PlayerSizer;
@@ -32,6 +33,10 @@ public class GameView extends JPanel {
 		drawBoundaries(g2);
 
 		drawItems(g2);
+		
+		//mega HP from adapter
+		
+		drawHPS(g2);
 
 		drawPlayers(g2);
 		
@@ -49,14 +54,19 @@ public class GameView extends JPanel {
 
 		for (Item item : Game_Main.map.items) {
 			g2.setColor(item.color);
-			
-			
-			
 			g2.fillOval(item.cPos.x, item.cPos.y, 5, 5);
 			g2.drawOval(item.cPos.x, item.cPos.y, 5, 5);
+		}
+	}
+	//draws megaHealth object
+	private void drawHPS(Graphics2D g2) {
+
+		for (IHealth hpp : Game_Main.map.hps) {
+			g2.setColor(Color.magenta);
+			g2.fillRect(370, 150, 10, 10);
+			g2.drawRect(370, 150, 10, 10);
 			//g2.drawImage(item.image, item.cPos.x, item.cPos.y, this);
 		}
-
 	}
 
 	public void drawMiniHUD(Graphics2D g2) {

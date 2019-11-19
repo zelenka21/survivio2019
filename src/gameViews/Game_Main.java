@@ -16,6 +16,9 @@ import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import Adapter.IHealth;
+import Adapter.MegaHPAdapter;
+import Adapter.MegaHealthPack;
 import Decorator.DecoratedPlayer;
 import Decorator.PlayerShape;
 import Decorator.PlayerSizer;
@@ -44,7 +47,8 @@ public class Game_Main {
 	
 	public volatile static ArrayList<Player> players;
 	public volatile static ArrayList<DecoratedPlayer> decPlayers;
-	
+	public static int erx=0;
+	public static int ery=0;
 	
 	public static Map map;
 	
@@ -55,7 +59,8 @@ public class Game_Main {
 		
         String userN = JOptionPane.showInputDialog(null, "Enter Username: ");
   
-		
+		erx = getRandomInt(5, 100);
+		ery = getRandomInt(5, 100);
 		player = new Player(userN, new Connection());
 		
 		
@@ -157,24 +162,30 @@ private static void tick() {
 								if(bound.getHealth() <= 1) {
 									bound.destroy();
 									//map.items.add(new Item(eplayer.cPos.x+25, eplayer.cPos.y-43));
+				//------------------------	--------------------------------------  ---------------------------------								
 									//dropStrategy
-									
-									
+			    //------------------------	--------------------------------------  ---------------------------------					
+									erx = getRandomInt(5, 80);
+									ery = getRandomInt(5, 80);
 									int strategyChooser = (Math.random() <= 0.5) ? 1 : 2;
 									
 									if(strategyChooser == 1)
 									{	//will drop Ammo
 										IDropStrategy dropAmmo = new DropAmmo();
-										dropAmmo.dropItem(new AmmoPack(eplayer.cPos.x+25, eplayer.cPos.y-43, 5), map, eplayer);
+										dropAmmo.dropItem(new AmmoPack(eplayer.cPos.x, eplayer.cPos.y, 5), map, eplayer, erx, ery);
 									}
 									else
 									{ 	//will drop health
 										IDropStrategy dropHP = new DropHealth();
-										dropHP.dropItem(new HealthPack(eplayer.cPos.x+25, eplayer.cPos.y-43, 5), map, eplayer);
+										dropHP.dropItem(new HealthPack(eplayer.cPos.x, eplayer.cPos.y, 5), map, eplayer, erx, ery);
+									
 									}
-								
-							
-									//map.items.add(new AmmoPack(eplayer.cPos.x+25, eplayer.cPos.y-43, 5));
+									
+				//------------------------	--------------------------------------  ---------------------------------								
+									//Adapter for MegaHealth drops
+			    //------------------------	--------------------------------------  ---------------------------------					
+									
+									map.hps.add(new MegaHPAdapter(new MegaHealthPack(370, 150)));
 								}
 								
 								if(bound.getHealth() <= 0) {
@@ -191,16 +202,30 @@ private static void tick() {
 				Item item = map.items.get(f);
 				
 				if(Util.intersects(eplayer.bounds(), item.bounds())){
-//					if(item instanceof HealthPack){
-//						eplayer.addHealth(((HealthPack) item).health);
-//						map.items.remove(f);
-//						continue;
-//					}
+					if(item instanceof HealthPack){
+						eplayer.addHealth(((HealthPack) item).health);
+						
+						map.items.remove(f);
+						continue;
+					}
 					if(item instanceof AmmoPack){
 						eplayer.addAmmo(((AmmoPack) item).amount);
 						map.items.remove(f);
 						continue;
 					}
+				}
+			}
+			
+			// Mega health pick ups
+			for(int f = 0 ; f < map.hps.size(); f++){
+				IHealth hpItem = map.hps.get(f);
+				
+				//if(eplayer.cPos.x == 370 && eplayer.cPos.y == 150 ){
+				if(eplayer.cPos.x > 365 && eplayer.cPos.x < 375 && eplayer.cPos.y > 145 && eplayer.cPos.y < 165){
+						eplayer.addHealth(hpItem.getHealth());
+						map.hps.remove(f);
+						continue;
+					
 				}
 			}
 		}
@@ -250,6 +275,14 @@ private static void tick() {
 			    	  e.printStackTrace();
 			      }
 			}
+	}
+	private static int getRandomInt(int min, int max) {
+
+		if (min >= max) {
+			throw new IllegalArgumentException("max must be greater than min");
+		}
+
+		return (int)(Math.random() * ((max - min) + 1)) + min;
 	}
 	
 	

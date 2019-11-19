@@ -6,6 +6,6 @@ import gameObjects.Player;
 
 public interface IDropStrategy {
 
-	public void dropItem(Item item, Map map, Player eplayer);
+	public void dropItem(Item item, Map map, Player eplayer, int erx, int ery);
 	
 }

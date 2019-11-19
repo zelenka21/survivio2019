@@ -1,10 +1,8 @@
 package gameObjects;
 
 import java.awt.Color;
-import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
 
 public class Item {
 	public Point cPos;
@@ -16,7 +14,9 @@ public class Item {
 		this.color = Color.BLACK;
 		//this.image = null;
 	}
-	
+	public Item()
+	{}
+
 	public Rectangle bounds(){
 		return new Rectangle(cPos.x, cPos.y, 5, 5);
 	}
