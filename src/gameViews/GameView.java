@@ -159,31 +159,7 @@ public class GameView extends JPanel {
 		}
 	}
 	public void drawDecoPlayers(Graphics2D g2) {
-		//for (DecoratedPlayer player : Game_Main.decPlayers) {
 
-//			if (player.shield.on) {
-//				g2.setColor(player.shield.color);
-//				g2.fillOval((player.cPos.x + 5) - player.shield.delta, (player.cPos.y + 5) - player.shield.delta,
-//						player.shield.delta * 2, player.shield.delta * 2);
-//			}
-
-		//	player.setFancyColor("yellow");
-			//g2.setColor(player.getColor());
-		//	g2.setColor(player.getColor());
-			
-		//	g2.fillRect(400, 400, 10, 10);
-//			if( player.getSpecialShape()==1)
-//			{
-//
-			//g2.fillOval(400, 400, player.getDsize(), player.getDsize());
-//			}
-
-			//player.setFancyColor("orange");
-			//g2.setColor(Color.BLACK);
-			//g2.drawRect(400, 400, 10, 10);
-
-			//g2.drawOval(400, 400, 10, 10);
-			
 			
 			//new implementation
 			int shape = 0;

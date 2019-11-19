@@ -11,9 +11,6 @@ public class MegaHPAdapter implements IHealth{
 	}
 	@Override
 	public void setHealth(int hp) {
-		// TODO Auto-generated method stub
-//		LazyThreadSafeSingleton ltss = LazyThreadSafeSingleton.getInstance();
-//		ltss.log("Mega Health pack dropped");
 		mega.setMegaHealth();
 		
 	}
