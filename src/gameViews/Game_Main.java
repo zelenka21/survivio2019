@@ -20,9 +20,13 @@ import Decorator.DecoratedPlayer;
 import Decorator.PlayerShape;
 import Decorator.PlayerSizer;
 import Decorator.PlayerSkin;
+import Strategy.DropAmmo;
+import Strategy.DropHealth;
+import Strategy.IDropStrategy;
 import gameObjects.AmmoPack;
 import gameObjects.Boundary;
 import gameObjects.BreakableBoundary;
+import gameObjects.HealthPack;
 import gameObjects.Item;
 import gameObjects.Map;
 import gameObjects.MapLoader;
@@ -152,7 +156,25 @@ private static void tick() {
 								bound.takeDamage(proj.damage);
 								if(bound.getHealth() <= 1) {
 									bound.destroy();
+									//map.items.add(new Item(eplayer.cPos.x+25, eplayer.cPos.y-43));
 									//dropStrategy
+									
+									
+									int strategyChooser = (Math.random() <= 0.5) ? 1 : 2;
+									
+									if(strategyChooser == 1)
+									{	//will drop Ammo
+										IDropStrategy dropAmmo = new DropAmmo();
+										dropAmmo.dropItem(new AmmoPack(eplayer.cPos.x+25, eplayer.cPos.y-43, 5), map, eplayer);
+									}
+									else
+									{ 	//will drop health
+										IDropStrategy dropHP = new DropHealth();
+										dropHP.dropItem(new HealthPack(eplayer.cPos.x+25, eplayer.cPos.y-43, 5), map, eplayer);
+									}
+								
+							
+									//map.items.add(new AmmoPack(eplayer.cPos.x+25, eplayer.cPos.y-43, 5));
 								}
 								
 								if(bound.getHealth() <= 0) {

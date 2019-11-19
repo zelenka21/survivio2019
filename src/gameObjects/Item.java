@@ -9,12 +9,12 @@ import java.awt.image.BufferedImage;
 public class Item {
 	public Point cPos;
 	public Color color;
-	public BufferedImage image;
+	//public BufferedImage image;
 	
 	public Item(int x, int y) {
 		this.cPos = new Point(x, y);
 		this.color = Color.BLACK;
-		this.image = null;
+		//this.image = null;
 	}
 	
 	public Rectangle bounds(){

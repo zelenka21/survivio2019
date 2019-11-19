@@ -49,7 +49,12 @@ public class GameView extends JPanel {
 
 		for (Item item : Game_Main.map.items) {
 			g2.setColor(item.color);
-			g2.drawImage(item.image, item.cPos.x, item.cPos.y, this);
+			
+			
+			
+			g2.fillOval(item.cPos.x, item.cPos.y, 5, 5);
+			g2.drawOval(item.cPos.x, item.cPos.y, 5, 5);
+			//g2.drawImage(item.image, item.cPos.x, item.cPos.y, this);
 		}
 
 	}
