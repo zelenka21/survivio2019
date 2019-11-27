@@ -165,7 +165,7 @@ public class GameView extends JPanel {
 			int shape = 0;
 			
 			PlayerSkin playerD = new PlayerSkin(new Player("deco", null));
-			playerD.setFancyColor("orange");
+			playerD.setFancyColor("red");
 			Color pColor = playerD.getColor();
 			
 			PlayerSizer playerDD = new PlayerSizer(playerD);

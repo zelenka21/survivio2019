@@ -23,6 +23,7 @@ import Decorator.DecoratedPlayer;
 import Decorator.PlayerShape;
 import Decorator.PlayerSizer;
 import Decorator.PlayerSkin;
+import Facade.Facade;
 import Strategy.DropAmmo;
 import Strategy.DropHealth;
 import Strategy.IDropStrategy;
@@ -49,22 +50,22 @@ public class Game_Main {
 	public volatile static ArrayList<DecoratedPlayer> decPlayers;
 	public static int erx=0;
 	public static int ery=0;
-	
 	public static Map map;
 	
 	public static int fps;
-	
+
 	
 	public static void main(String[] args) {
-		
+
+		Facade fc = new Facade();
+
         String userN = JOptionPane.showInputDialog(null, "Enter Username: ");
   
 		erx = getRandomInt(5, 100);
 		ery = getRandomInt(5, 100);
+
 		player = new Player(userN, new Connection());
-		
 		players = new ArrayList<Player>();
-		
 		players.add(player);
 		//
 		loadMap();
@@ -83,14 +84,14 @@ public class Game_Main {
 		try {
 			TimeUnit.SECONDS.sleep(2);
 	    } catch (InterruptedException e) {}
-		gameLoop();
+		gameLoop(fc);
 		
 	}
 
 	private static void loadMap() {
 		File mapFile = null;
 		
-		JFileChooser mapChooser = new JFileChooser();
+		JFileChooser mapChooser = new JFileChooser("./src/maps");
 		FileNameExtensionFilter filter = new FileNameExtensionFilter(".map files", "map");
 		mapChooser.setFileFilter(filter);
 		if(mapChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
@@ -105,12 +106,11 @@ public class Game_Main {
 	}
 
 	
-private static void tick() {
+private static void tick(Facade fc) {
 		
 		for(int i = 0; i < players.size(); i++) {
-			
-			Player eplayer = players.get(i);
 
+			Player eplayer = players.get(i);
 			if(eplayer.getHealth() <= 0){
 				players.remove(i);
 				continue;
@@ -146,9 +146,9 @@ private static void tick() {
 						if(boundary instanceof BreakableBoundary) {
 							BreakableBoundary bound = (BreakableBoundary) boundary;
 							if(Util.intersects(new Rectangle(proj.nPos.x, proj.nPos.y, proj.sizeX, proj.sizeY), bound)) {
-								bound.takeDamage(proj.damage);
-								if(bound.getHealth() <= 1) {
-									bound.destroy();
+								fc.boundaryTakeDamage(bound, proj.damage);
+								if(fc.boundaryGetHealth(bound) <= 1) {
+									fc.boundaryDestroy(bound);
 									//map.items.add(new Item(eplayer.cPos.x+25, eplayer.cPos.y-43));
 				//------------------------	--------------------------------------  ---------------------------------								
 									//dropStrategy
@@ -157,17 +157,18 @@ private static void tick() {
 									ery = getRandomInt(5, 80);
 									int strategyChooser = (Math.random() <= 0.5) ? 1 : 2;
 									
-									if(strategyChooser == 1)
-									{	//will drop Ammo
-										IDropStrategy dropAmmo = new DropAmmo();
-										dropAmmo.dropItem(new AmmoPack(eplayer.cPos.x, eplayer.cPos.y, 5), map, eplayer, erx, ery);
-									}
-									else
-									{ 	//will drop health
-										IDropStrategy dropHP = new DropHealth();
-										dropHP.dropItem(new HealthPack(eplayer.cPos.x, eplayer.cPos.y, 5), map, eplayer, erx, ery);
-									
-									}
+									//if(strategyChooser == 1)
+									//{	//will drop Ammo
+											//IDropStrategy dropAmmo = new DropAmmo();
+											//dropAmmo.dropItem(new AmmoPack(eplayer.cPos.x, eplayer.cPos.y, 5), map, eplayer, erx, ery);
+										fc.dropAmmo(new AmmoPack(eplayer.cPos.x, eplayer.cPos.y, 5), map, eplayer, erx, ery);
+									//}
+									//else
+									//{ 	//will drop health
+											//IDropStrategy dropHP = new DropHealth();
+											//dropHP.dropItem(new HealthPack(eplayer.cPos.x, eplayer.cPos.y, 5), map, eplayer, erx, ery);
+										fc.dropHealth(new HealthPack(eplayer.cPos.x, eplayer.cPos.y, 5), map, eplayer, erx, ery);
+									//}
 									
 				//------------------------	--------------------------------------  ---------------------------------								
 									//Adapter for MegaHealth drops
@@ -192,7 +193,7 @@ private static void tick() {
 				if(Util.intersects(eplayer.bounds(), item.bounds())){
 					if(item instanceof HealthPack){
 						eplayer.addHealth(((HealthPack) item).health);
-						
+
 						map.items.remove(f);
 						continue;
 					}
@@ -228,7 +229,7 @@ private static void tick() {
 		}
 	}
 	
-	public static void gameLoop() {
+	public static void gameLoop(Facade fc) {
 		
 		long lastLoopTime = System.nanoTime();
 		int targetFPS = 60;
@@ -253,7 +254,7 @@ private static void tick() {
 			         fps = 0;
 			      }
 			      
-			      tick();
+			      tick(fc);
 			      
 			      paint();
 
