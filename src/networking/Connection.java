@@ -2,8 +2,10 @@ package networking;
 
 import java.awt.Color;
 import java.awt.Point;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.Scanner;
 
 import javax.swing.JTextPane;
@@ -54,6 +56,20 @@ public class Connection {
 		});
 		t.start();
 	}
+	//todo make reconnecting possible g
+	
+//	public void reconnect() {
+//
+//		try {
+//			Socket echoSocket = new Socket(RefStrings.SERVER_IP, RefStrings.ECHO_PORT);
+//		} catch (UnknownHostException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
 	
 	public void disconnect() {
 		

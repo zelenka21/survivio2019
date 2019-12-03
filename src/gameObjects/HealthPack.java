@@ -16,16 +16,11 @@ public int health;
 		super(x, y);
 		
 		this.health = health;
-		this.color = Color.RED;
+		setColor(Color.RED);
 		
 		
 	}
 	
-	@Override
-	public Rectangle bounds(){
-		return new Rectangle(cPos.x, cPos.y, 7, 7);
-	}
-
 	@Override
 	public void setHealth(int hp) {
 		this.health = hp;
@@ -36,6 +31,7 @@ public int health;
 	public int getHealth() {
 		return this.health;
 	}
+	
 	
 
 }
