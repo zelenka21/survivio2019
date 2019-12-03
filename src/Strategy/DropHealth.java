@@ -11,7 +11,7 @@ public class DropHealth implements IDropStrategy{
 	@Override
 	public void dropItem(Item item, Map map, Player eplayer, int erx, int ery) {
 		// 
-		map.items.add(new AmmoPack(eplayer.cPos.x+erx, eplayer.cPos.y-ery, 5));
+		map.items.add(new HealthPack(eplayer.cPos.x+erx, eplayer.cPos.y-ery, 5));
 
 	}
 

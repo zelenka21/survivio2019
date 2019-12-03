@@ -157,18 +157,19 @@ private static void tick(Facade fc) {
 									ery = getRandomInt(5, 80);
 									int strategyChooser = (Math.random() <= 0.5) ? 1 : 2;
 									
-									//if(strategyChooser == 1)
-									//{	//will drop Ammo
-											//IDropStrategy dropAmmo = new DropAmmo();
-											//dropAmmo.dropItem(new AmmoPack(eplayer.cPos.x, eplayer.cPos.y, 5), map, eplayer, erx, ery);
-										fc.dropAmmo(new AmmoPack(eplayer.cPos.x, eplayer.cPos.y, 5), map, eplayer, erx, ery);
-									//}
-									//else
-									//{ 	//will drop health
-											//IDropStrategy dropHP = new DropHealth();
-											//dropHP.dropItem(new HealthPack(eplayer.cPos.x, eplayer.cPos.y, 5), map, eplayer, erx, ery);
+									
+								    if(strategyChooser == 1)
+									{	//will drop Ammo
+//											//IDropStrategy dropAmmo = new DropAmmo();
+//											//dropAmmo.dropItem(new AmmoPack(eplayer.cPos.x, eplayer.cPos.y, 5), map, eplayer, erx, ery);
+									fc.dropAmmo(new AmmoPack(eplayer.cPos.x, eplayer.cPos.y, 5), map, eplayer, erx, ery);
+									}
+								    else
+									{ 	//will drop health
+							//				IDropStrategy dropHP = new DropHealth();
+										//dropHP.dropItem(new HealthPack(eplayer.cPos.x, eplayer.cPos.y, 5), map, eplayer, erx, ery);
 										fc.dropHealth(new HealthPack(eplayer.cPos.x, eplayer.cPos.y, 5), map, eplayer, erx, ery);
-									//}
+								}
 									
 				//------------------------	--------------------------------------  ---------------------------------								
 									//Adapter for MegaHealth drops

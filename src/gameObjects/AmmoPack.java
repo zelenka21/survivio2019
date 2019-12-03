@@ -15,7 +15,7 @@ public int amount;
 		super(x, y);
 		
 		this.amount = amount;
-		this.color = Color.GRAY;
+		this.color = Color.gray;
 		
 //		URL file = Game_Main.class.getClassLoader().getResource("/images/ammo_pack.bmp");
 //		try {
