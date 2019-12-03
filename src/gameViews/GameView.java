@@ -165,26 +165,28 @@ public class GameView extends JPanel {
 		}
 	}
 	public void drawPlayers2(Graphics2D g2) {
+		
+		int shape = 0;
+		int size = 10;
 		for (Player player : Game_Main.players) {
 
 			
 			
-		int shape = 0;
-		int size = 10;
+			
 			
 			PlayerSkin playerD = new PlayerSkin(new Player("deco", null));
 			playerD.setFancyColor("blue");
 			Color pColor = playerD.getColor();
 			
 			
-			//enable size decoration level
+			//enable size decoration level here
 			
 //			PlayerSizer playerDD = new PlayerSizer(playerD);
 //			size = playerDD.getDsize();
 //			g2.setColor(pColor);
 			
 			
-			//enable shape decoration level
+			//enable shape decoration level here
 			
 //			PlayerShape playerDDD = new PlayerShape(playerDD);
 //			shape = playerDDD.getSpecialShape();
@@ -192,25 +194,25 @@ public class GameView extends JPanel {
 			g2.setColor(pColor);
 			
 			if(shape==0) {
-//				g2.fillRect(400, 400, size, size);
-//				g2.drawRect(400, 400, size, size);
+				if (player.specColor == Color.GRAY) {
+					if(cnt>2) {
+						g2.setColor(Color.RED);
+					}
+				}
 				
 				
 				g2.fillRect(player.cPos.x, player.cPos.y, size, size);
-				g2.setColor(Color.BLACK);
+				g2.setColor(player.specColor);
+				
 				g2.drawRect(player.cPos.x, player.cPos.y, size, size);
 			}
 			else
 			{
 				g2.fillOval(player.cPos.x, player.cPos.y, size, size);
+				g2.setColor(player.specColor);
 				g2.drawOval(player.cPos.x, player.cPos.y, size, size);
-				
 			}
-			
-
-			
 //			g2.setColor(pColor);
-			
 //			g2.fillRect(player.cPos.x, player.cPos.y, 10, 10);
 //			g2.setColor(Color.BLACK);
 //			g2.drawRect(player.cPos.x, player.cPos.y, 10, 10);
@@ -222,7 +224,6 @@ public class GameView extends JPanel {
 			
 			//new implementation
 			int shape = 0;
-			
 			PlayerSkin playerD = new PlayerSkin(new Player("deco", null));
 			playerD.setFancyColor("red");
 			Color pColor = playerD.getColor();
@@ -230,8 +231,6 @@ public class GameView extends JPanel {
 			PlayerSizer playerDD = new PlayerSizer(playerD);
 			int size = playerDD.getDsize();
 			g2.setColor(pColor);
-			
-			
 			PlayerShape playerDDD = new PlayerShape(playerDD);
 			shape = playerDDD.getSpecialShape();
 			if(shape==0) {
@@ -243,12 +242,9 @@ public class GameView extends JPanel {
 				g2.fillOval(400, 400, size, size);
 				g2.drawOval(400, 400, size, size);
 			}
-			
-			
 //			DecoratedPlayer playerDD = new PlayerSizer(playerD);
 //			playerDD.getDsize();
 //			//playerD.setFancyColor("yellow");
-//			
 //			decPlayers = new ArrayList<DecoratedPlayer>();
 //			decPlayers.add(playerDD);
 

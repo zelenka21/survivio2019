@@ -24,6 +24,7 @@ import Decorator.PlayerShape;
 import Decorator.PlayerSizer;
 import Decorator.PlayerSkin;
 import Facade.Facade;
+import State.PlayerStates;
 import Strategy.DropAmmo;
 import Strategy.DropHealth;
 import Strategy.IDropStrategy;
@@ -111,6 +112,11 @@ private static void tick(Facade fc) {
 		for(int i = 0; i < players.size(); i++) {
 
 			Player eplayer = players.get(i);
+			
+			//player state object
+			PlayerStates pst = new PlayerStates(eplayer);
+			
+
 			if(eplayer.getHealth() <= 0){
 				players.remove(i);
 				continue;
@@ -134,8 +140,13 @@ private static void tick(Facade fc) {
 					for(Player hitPlayer : players) {
 						if(!proj.owner.username.equals(hitPlayer.username)) {
 							if(Util.intersects(proj.bounds(), hitPlayer.bounds()) /**&& !hitPlayer.shield.on**/) {
+								//player is hit
+//								PlayerStates pst = new PlayerStates(hitPlayer);
+//								pst.changeState();
+//								pst.changeSpeed(hitPlayer);
 								hitPlayer.takeDamage(proj.damage);
 								eplayer.liveAmmo.remove(c);
+								pst.changeState();
 								break;
 							}
 						}
@@ -194,7 +205,7 @@ private static void tick(Facade fc) {
 				if(Util.intersects(eplayer.bounds(), item.bounds())){
 					if(item instanceof HealthPack){
 						eplayer.addHealth(((HealthPack) item).health);
-
+						pst.changeState();
 						map.items.remove(f);
 						continue;
 					}
@@ -213,7 +224,9 @@ private static void tick(Facade fc) {
 				//if(eplayer.cPos.x == 370 && eplayer.cPos.y == 150 ){
 				if(eplayer.cPos.x > 365 && eplayer.cPos.x < 375 && eplayer.cPos.y > 145 && eplayer.cPos.y < 165){
 						eplayer.addHealth(hpItem.getHealth());
+						eplayer.hasMega = true;
 						map.hps.remove(f);
+						pst.changeState();
 						continue;
 					
 				}

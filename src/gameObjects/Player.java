@@ -3,6 +3,7 @@ package gameObjects;
 import java.util.ArrayList;
 
 import Decorator.DecoratedPlayer;
+import State.PlayerStates;
 import gameViews.Game_Main;
 import networking.Connection;
 import util.Util;
@@ -39,6 +40,8 @@ public class Player implements DecoratedPlayer{
 	
 	public Point cPos;
 	public Point pPos;
+	public boolean hasMega = false;
+	public Color specColor;
 	
 	public Player(String username, Connection connection) {
 		this.username = username;
