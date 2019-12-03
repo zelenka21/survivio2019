@@ -27,6 +27,9 @@ public class PlayerSkin extends Decorator{
 		case "yellow":
 			this.fancyColor = Color.yellow;
 			break;
+		case "blue":
+			this.fancyColor = Color.blue;
+			break;
 		default:
 		    this.fancyColor = Color.gray;
 		    break;

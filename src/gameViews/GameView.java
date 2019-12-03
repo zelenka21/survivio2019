@@ -22,6 +22,7 @@ public class GameView extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	public static int fps = 0;
+	public static int cnt=0;
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -35,18 +36,23 @@ public class GameView extends JPanel {
 		drawItems(g2);
 		
 		//mega HP from adapter
-		
 		drawHPS(g2);
 
-		drawPlayers(g2);
+		drawPlayers2(g2);
 		
-		drawDecoPlayers(g2);
+		//drawDecoPlayers(g2);
 
 		drawProjectiles(g2);
 
 		drawHUD(g2);
 
 		drawMiniHUD(g2);
+		
+		cnt++;
+		if(cnt>5)
+		{
+			cnt = 0;
+		}
 
 	}
 
@@ -155,6 +161,59 @@ public class GameView extends JPanel {
 			g2.fillRect(player.cPos.x, player.cPos.y, 10, 10);
 			g2.setColor(Color.BLACK);
 			g2.drawRect(player.cPos.x, player.cPos.y, 10, 10);
+
+		}
+	}
+	public void drawPlayers2(Graphics2D g2) {
+		for (Player player : Game_Main.players) {
+
+			
+			
+		int shape = 0;
+		int size = 10;
+			
+			PlayerSkin playerD = new PlayerSkin(new Player("deco", null));
+			playerD.setFancyColor("blue");
+			Color pColor = playerD.getColor();
+			
+			
+			//enable size decoration level
+			
+//			PlayerSizer playerDD = new PlayerSizer(playerD);
+//			size = playerDD.getDsize();
+//			g2.setColor(pColor);
+			
+			
+			//enable shape decoration level
+			
+//			PlayerShape playerDDD = new PlayerShape(playerDD);
+//			shape = playerDDD.getSpecialShape();
+			
+			g2.setColor(pColor);
+			
+			if(shape==0) {
+//				g2.fillRect(400, 400, size, size);
+//				g2.drawRect(400, 400, size, size);
+				
+				
+				g2.fillRect(player.cPos.x, player.cPos.y, size, size);
+				g2.setColor(Color.BLACK);
+				g2.drawRect(player.cPos.x, player.cPos.y, size, size);
+			}
+			else
+			{
+				g2.fillOval(player.cPos.x, player.cPos.y, size, size);
+				g2.drawOval(player.cPos.x, player.cPos.y, size, size);
+				
+			}
+			
+
+			
+//			g2.setColor(pColor);
+			
+//			g2.fillRect(player.cPos.x, player.cPos.y, 10, 10);
+//			g2.setColor(Color.BLACK);
+//			g2.drawRect(player.cPos.x, player.cPos.y, 10, 10);
 
 		}
 	}
