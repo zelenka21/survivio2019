@@ -3,7 +3,6 @@ package Adapter;
 import java.awt.Color;
 import java.awt.Rectangle;
 
-import Adapter.IHealth;
 import gameObjects.Item;
 
 

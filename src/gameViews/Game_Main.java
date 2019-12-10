@@ -37,6 +37,7 @@ import gameObjects.Map;
 import gameObjects.MapLoader;
 import gameObjects.Player;
 import gameObjects.Projectile;
+import gameObjects.Teleport;
 import networking.Connection;
 import util.Util;
 
@@ -187,6 +188,7 @@ private static void tick(Facade fc) {
 			    //------------------------	--------------------------------------  ---------------------------------					
 									
 									map.hps.add(new MegaHPAdapter(new MegaHealthPack(370, 150)));
+									
 								}
 								
 								if(bound.getHealth() <= 0) {
@@ -211,6 +213,11 @@ private static void tick(Facade fc) {
 					}
 					if(item instanceof AmmoPack){
 						eplayer.addAmmo(((AmmoPack) item).amount);
+						map.items.remove(f);
+						continue;
+					}
+					if(item instanceof Teleport){
+						eplayer.hasTeleport = true;
 						map.items.remove(f);
 						continue;
 					}

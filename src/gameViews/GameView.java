@@ -11,6 +11,7 @@ import gameObjects.Boundary;
 import gameObjects.Item;
 import gameObjects.Player;
 import gameObjects.Projectile;
+import gameObjects.Teleport;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -62,6 +63,13 @@ public class GameView extends JPanel {
 			g2.setColor(item.color);
 			g2.fillOval(item.cPos.x, item.cPos.y, 5, 5);
 			g2.drawOval(item.cPos.x, item.cPos.y, 5, 5);
+			if(item instanceof Teleport){
+				g2.setColor(Color.ORANGE);
+				g2.fillOval(item.cPos.x, item.cPos.y, 12, 12);
+				g2.setColor(Color.PINK);
+				g2.drawOval(item.cPos.x, item.cPos.y, 12, 12);
+			}
+			
 		}
 	}
 	//draws megaHealth object
@@ -74,7 +82,6 @@ public class GameView extends JPanel {
 			//g2.drawImage(item.image, item.cPos.x, item.cPos.y, this);
 		}
 	}
-
 	public void drawMiniHUD(Graphics2D g2) {
 		for (Player player : Game_Main.players) {
 			if (player.showMiniHUD) {

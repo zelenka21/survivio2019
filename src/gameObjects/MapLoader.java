@@ -35,6 +35,7 @@ public class MapLoader {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+		items.add(new Teleport(150,150, 1));//add Teleport item
 		String name = path.getFileName().toString().substring(0, path.getFileName().toString().indexOf(".map"));
 		return new Map(boundaries, items, name);
 	}

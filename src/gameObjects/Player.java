@@ -41,7 +41,9 @@ public class Player implements DecoratedPlayer{
 	public Point cPos;
 	public Point pPos;
 	public boolean hasMega = false;
+	public boolean hasTeleport = false;
 	public Color specColor;
+	
 	
 	public Player(String username, Connection connection) {
 		this.username = username;
@@ -180,12 +182,26 @@ public class Player implements DecoratedPlayer{
 			case KeyEvent.VK_D:
 				right = true;
 				break;
-//			case KeyEvent.VK_T:
-//				shield.focus();
-//				break;
+			case KeyEvent.VK_T://teleport
+				if(hasTeleport) {
+
+					this.speed = 10; //change this to Memento restore state
+					hasTeleport = false;
+				}
+				else this.speed = 3;
+				break;
+				//add button for memento save state
 		}
 		updateMovement();
 	}
+//	//memento methods
+//    public Memento saveToMemento() {
+//        return new Memento(this.cPos);
+//    }
+// 
+//    public void restoreFromMemento(Memento memento) {
+//        this.cPos = memento.getSavedState();
+//    }
 
 	public void keyReleased(KeyEvent e) {
 		switch (e.getKeyCode()) {
@@ -210,8 +226,19 @@ public class Player implements DecoratedPlayer{
 		return this.color;
 		
 	}
-	
-	
+//    public static class Memento {
+//        private final Point telePos;
+//
+//        public Memento(Point cPos) {
+//        	telePos = cPos;
+//        }
+// 
+//        // accessible by outer class only
+//        private Point getSavedState() {
+//            return telePos;
+//        }
+//    }
+//	
 
 	
 	
