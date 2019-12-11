@@ -214,7 +214,10 @@ public class Connection {
 							String username = client.echoIn.nextLine();
 							String color = client.echoIn.nextLine();
 							
-							Game_Main.players.add(new Player(username, null));
+							//Game_Main.players.add(new Player(username, null));
+							
+
+							Game_Main.players.add(new Player(username, Color.getColor(color, Color.RED), null));
 							
 						} else if (cmd.equals(RefStrings.CMD_UPDATEPOSITION)) {
 							
@@ -255,6 +258,7 @@ public class Connection {
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
+					echoListen();//restart thread if it fails
 				} finally {
 					
 				}

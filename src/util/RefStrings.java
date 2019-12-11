@@ -2,7 +2,10 @@ package util;
 
 public class RefStrings {
 
-	public static final String SERVER_IP = "153.92.4.128"; //VPS server address
+	//public static final String SERVER_IP = "153.92.4.128"; //VPS server address
+	public static final String SERVER_IP = "127.0.0.1";
+	
+	
 	//Port numbers for web sockets
 	public static final int DATA_PORT = 5656;
 	public static final int ECHO_PORT = 5657;

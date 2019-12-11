@@ -39,7 +39,8 @@ public class GameView extends JPanel {
 		//mega HP from adapter
 		drawHPS(g2);
 
-		drawPlayers2(g2);
+		drawPlayers(g2);
+		//drawPlayers2(g2); //for decorator
 		
 		//drawDecoPlayers(g2);
 
