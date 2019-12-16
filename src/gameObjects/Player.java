@@ -57,7 +57,7 @@ public class Player implements DecoratedPlayer{
 		ammo = new Ammo(new Projectile(this, cPos, pPos), 100);
 		liveAmmo = new ArrayList<Projectile>();
 		//shield = new Shield(5000, new Color(255, 153, 255));
-		health = 50;
+		health = 1;
 		totalHealth = 50;
 		speed = 2;
 		xVel = 0;

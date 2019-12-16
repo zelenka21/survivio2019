@@ -24,26 +24,18 @@ import Decorator.PlayerShape;
 import Decorator.PlayerSizer;
 import Decorator.PlayerSkin;
 import Facade.Facade;
+import Flyweight.HealthPackFactory;
 import State.PlayerStates;
 import Strategy.DropAmmo;
 import Strategy.DropHealth;
 import Strategy.IDropStrategy;
-import gameObjects.AmmoPack;
-import gameObjects.Boundary;
-import gameObjects.BreakableBoundary;
-import gameObjects.HealthPack;
-import gameObjects.Item;
-import gameObjects.Map;
-import gameObjects.MapLoader;
-import gameObjects.Player;
-import gameObjects.Projectile;
-import gameObjects.Teleport;
+import gameObjects.*;
 import networking.Connection;
 import util.Util;
 
 public class Game_Main {
 
-	
+	public static LazyThreadSafeSingleton ltss = LazyThreadSafeSingleton.getInstance();
     public static gameFrame window;
 	
 	public static Player player;
@@ -56,8 +48,10 @@ public class Game_Main {
 	
 	public static int fps;
 
-	
+	private static final int healthPackValues[] = { 5, 6, 7, 8, 9, 10};
 	public static void main(String[] args) {
+
+
 
 		Facade fc = new Facade();
 
@@ -109,7 +103,7 @@ public class Game_Main {
 
 	
 private static void tick(Facade fc) {
-		
+
 		for(int i = 0; i < players.size(); i++) {
 
 			Player eplayer = players.get(i);
@@ -180,7 +174,13 @@ private static void tick(Facade fc) {
 									{ 	//will drop health
 							//				IDropStrategy dropHP = new DropHealth();
 										//dropHP.dropItem(new HealthPack(eplayer.cPos.x, eplayer.cPos.y, 5), map, eplayer, erx, ery);
-										fc.dropHealth(new HealthPack(eplayer.cPos.x, eplayer.cPos.y, 5), map, eplayer, erx, ery);
+										fc.dropHealth((HealthPack) HealthPackFactory.getHealthPack(eplayer.cPos.x, eplayer.cPos.y, getRandomHealth()), map, eplayer, erx, ery);
+										long startTime = System.currentTimeMillis();
+										for (int j = 0; j < 1000; ++j){
+											fc.dropHealth((HealthPack) HealthPackFactory.getHealthPack(eplayer.cPos.x, eplayer.cPos.y, getRandomHealth()), map, eplayer, erx, ery);
+										}
+										long endTime = System.currentTimeMillis();
+										ltss.log("Proccess took: " + (endTime - startTime) + " milliseconds.\n");
 								}
 									
 				//------------------------	--------------------------------------  ---------------------------------								
@@ -188,7 +188,6 @@ private static void tick(Facade fc) {
 			    //------------------------	--------------------------------------  ---------------------------------					
 									
 									map.hps.add(new MegaHPAdapter(new MegaHealthPack(370, 150)));
-									
 								}
 								
 								if(bound.getHealth() <= 0) {
@@ -216,11 +215,6 @@ private static void tick(Facade fc) {
 						map.items.remove(f);
 						continue;
 					}
-					if(item instanceof Teleport){
-						eplayer.hasTeleport = true;
-						map.items.remove(f);
-						continue;
-					}
 				}
 			}
 			
@@ -239,6 +233,10 @@ private static void tick(Facade fc) {
 				}
 			}
 		}
+	}
+
+	private static int getRandomHealth() {
+		return healthPackValues[(int)(Math.random()*healthPackValues.length)];
 	}
 	
 	private static void paint() {
