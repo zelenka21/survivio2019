@@ -1,19 +1,22 @@
 package Memento;
 
-import java.util.ArrayList;
-import java.util.List;
+
+import java.awt.Point;
 
 import gameObjects.Player;
-//import gameObjects.Player.Memento;
 
 public class Caretaker {
-//	public static List<Memento> savedStates = 	new ArrayList<Player.Memento>();
-//
-//	public static void SaveState(Memento memento)
-//	{
-//		Player originator = new Player("test", null);
-//	    savedStates.add(originator.saveToMemento());
-//	}
+	
+	private Point cPos;
+	private TeleportState tpState;
+	
+	public void hitSave(Player p) {
+		tpState = p.save();
+	}
+	public void hitUndo(Player p) {
+		p.restore(tpState);
+	}
+
 }
 
 

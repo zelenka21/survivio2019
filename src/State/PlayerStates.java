@@ -38,7 +38,7 @@ public class PlayerStates {
 			currentState = regState;
 			changeSpeed();changeLooks();
 		}
-		else if (player.health < 25) {
+		else if (player.health <= 25) {
 			currentState = lowState;
 			changeSpeed();changeLooks();
 		}

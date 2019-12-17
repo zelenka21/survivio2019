@@ -3,6 +3,9 @@ package gameObjects;
 import java.util.ArrayList;
 
 import Decorator.DecoratedPlayer;
+import Memento.Caretaker;
+import Memento.TeleportMemento;
+import Memento.TeleportState;
 import State.PlayerStates;
 import gameViews.Game_Main;
 import networking.Connection;
@@ -43,6 +46,8 @@ public class Player implements DecoratedPlayer{
 	public boolean hasMega = false;
 	public boolean hasTeleport = false;
 	public Color specColor;
+	//memento teleport
+	private TeleportState myTeleportState;
 	
 	
 	public Player(String username, Connection connection) {
@@ -203,27 +208,40 @@ public class Player implements DecoratedPlayer{
 			case KeyEvent.VK_D:
 				right = true;
 				break;
+			case KeyEvent.VK_R:
+				if(hasTeleport) { // save teleport state
+					hitSave();
+				}
+				break;
 			case KeyEvent.VK_T://teleport
 				if(hasTeleport) {
-
-					this.speed = 10; //change this to Memento restore state
+					hitUndo();
 					hasTeleport = false;
+					
 				}
-				else this.speed = 3;
 				break;
-				//add button for memento save state
 		}
 		updateMovement();
 	}
 //	//memento methods
-//    public Memento saveToMemento() {
-//        return new Memento(this.cPos);
-//    }
-// 
-//    public void restoreFromMemento(Memento memento) {
-//        this.cPos = memento.getSavedState();
-//    }
 
+	public TeleportState save() {
+		return new TeleportState(cPos.x, cPos.y);
+	}
+	public void restore(TeleportState save) {
+		cPos.x = save.getX(); 
+		cPos.y = save.getY(); 
+	}
+//	
+	//player acts as caretaker for memento	
+	public void hitSave() {
+		myTeleportState = save();
+	}
+	public void hitUndo() {
+		restore(myTeleportState);
+	}
+	
+	
 	public void keyReleased(KeyEvent e) {
 		switch (e.getKeyCode()) {
 			case KeyEvent.VK_S:
