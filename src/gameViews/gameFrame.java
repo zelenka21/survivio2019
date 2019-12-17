@@ -130,7 +130,6 @@ private void initPlayerEvents() {
 				Projectile proj = new Projectile(Game_Main.player, Game_Main.player.cPos, mouse.getPoint());
 				Game_Main.player.shoot(proj);
 				Game_Main.player.connection.echoProjectile(proj);
-				ltss.log("Projectile shot by " + Game_Main.player.username + "\n");
 			}
 		});
 		

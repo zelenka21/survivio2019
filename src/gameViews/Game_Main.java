@@ -24,26 +24,22 @@ import Decorator.PlayerShape;
 import Decorator.PlayerSizer;
 import Decorator.PlayerSkin;
 import Facade.Facade;
+import Flyweight.HealthPackFactory;
 import State.PlayerStates;
 import Strategy.DropAmmo;
 import Strategy.DropHealth;
 import Strategy.IDropStrategy;
-import gameObjects.AmmoPack;
-import gameObjects.Boundary;
-import gameObjects.BreakableBoundary;
-import gameObjects.HealthPack;
-import gameObjects.Item;
-import gameObjects.Map;
-import gameObjects.MapLoader;
-import gameObjects.Player;
-import gameObjects.Projectile;
-import gameObjects.Teleport;
+import Visitor.DeadVisitor;
+import Visitor.LowVisitor;
+import Visitor.MegaVisitor;
+import Visitor.RegularVisitor;
+import gameObjects.*;
 import networking.Connection;
 import util.Util;
 
 public class Game_Main {
 
-	
+	public static LazyThreadSafeSingleton ltss = LazyThreadSafeSingleton.getInstance();
     public static gameFrame window;
 	
 	public static Player player;
@@ -56,8 +52,10 @@ public class Game_Main {
 	
 	public static int fps;
 
-	
+	private static final int healthPackValues[] = { 5, 6, 7, 8, 9, 10};
 	public static void main(String[] args) {
+
+
 
 		Facade fc = new Facade();
 
@@ -109,13 +107,17 @@ public class Game_Main {
 
 	
 private static void tick(Facade fc) {
-		
+
 		for(int i = 0; i < players.size(); i++) {
 
 			Player eplayer = players.get(i);
 			
 			//player state object
 			PlayerStates pst = new PlayerStates(eplayer);
+			DeadVisitor deadV = new DeadVisitor();
+			LowVisitor lowV = new LowVisitor();
+			MegaVisitor megaV = new MegaVisitor();
+			RegularVisitor regV = new RegularVisitor();
 			
 
 			if(eplayer.getHealth() <= 0){
@@ -141,13 +143,15 @@ private static void tick(Facade fc) {
 					for(Player hitPlayer : players) {
 						if(!proj.owner.username.equals(hitPlayer.username)) {
 							if(Util.intersects(proj.bounds(), hitPlayer.bounds()) /**&& !hitPlayer.shield.on**/) {
-								//player is hit
-//								PlayerStates pst = new PlayerStates(hitPlayer);
-//								pst.changeState();
-//								pst.changeSpeed(hitPlayer);
 								hitPlayer.takeDamage(proj.damage);
 								eplayer.liveAmmo.remove(c);
-								pst.changeState();
+								if(eplayer.getHealth() < 25){
+									if(eplayer.getHealth() < 1)
+										pst.accept(deadV);
+									else
+										pst.accept(lowV);
+								}
+
 								break;
 							}
 						}
@@ -172,15 +176,11 @@ private static void tick(Facade fc) {
 									
 								    if(strategyChooser == 1)
 									{	//will drop Ammo
-//											//IDropStrategy dropAmmo = new DropAmmo();
-//											//dropAmmo.dropItem(new AmmoPack(eplayer.cPos.x, eplayer.cPos.y, 5), map, eplayer, erx, ery);
 									fc.dropAmmo(new AmmoPack(eplayer.cPos.x, eplayer.cPos.y, 5), map, eplayer, erx, ery);
 									}
 								    else
 									{ 	//will drop health
-							//				IDropStrategy dropHP = new DropHealth();
-										//dropHP.dropItem(new HealthPack(eplayer.cPos.x, eplayer.cPos.y, 5), map, eplayer, erx, ery);
-										fc.dropHealth(new HealthPack(eplayer.cPos.x, eplayer.cPos.y, 5), map, eplayer, erx, ery);
+										fc.dropHealth((HealthPack) HealthPackFactory.getHealthPack(eplayer.cPos.x, eplayer.cPos.y, getRandomHealth()), map, eplayer, erx, ery);
 								}
 									
 				//------------------------	--------------------------------------  ---------------------------------								
@@ -188,7 +188,6 @@ private static void tick(Facade fc) {
 			    //------------------------	--------------------------------------  ---------------------------------					
 									
 									map.hps.add(new MegaHPAdapter(new MegaHealthPack(370, 150)));
-									
 								}
 								
 								if(bound.getHealth() <= 0) {
@@ -207,7 +206,10 @@ private static void tick(Facade fc) {
 				if(Util.intersects(eplayer.bounds(), item.bounds())){
 					if(item instanceof HealthPack){
 						eplayer.addHealth(((HealthPack) item).health);
-						pst.changeState();
+						if(eplayer.getHealth() < 25)
+							pst.accept(lowV);
+						else
+							pst.accept(regV);
 						map.items.remove(f);
 						continue;
 					}
@@ -233,12 +235,16 @@ private static void tick(Facade fc) {
 						eplayer.addHealth(hpItem.getHealth());
 						eplayer.hasMega = true;
 						map.hps.remove(f);
-						pst.changeState();
+						pst.accept(megaV);
 						continue;
 					
 				}
 			}
 		}
+	}
+
+	private static int getRandomHealth() {
+		return healthPackValues[(int)(Math.random()*healthPackValues.length)];
 	}
 	
 	private static void paint() {

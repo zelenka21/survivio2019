@@ -1,20 +1,22 @@
 package State;
 
 import gameObjects.Player;
+
 import java.awt.Color;
-public class MegaState implements State{
 
-	@Override
-	public void changeSpeed(Player p) {
-		p.setSpeed(5);
-		
-	}
+public class MegaState implements State {
 
-	@Override
-	public void changeLooks(Player p) {
+    @Override
+    public void changeSpeed(Player p) {
+        p.setSpeed(5);
 
-		p.specColor = Color.YELLOW;
-		
-	}
+    }
+
+    @Override
+    public void changeLooks(Player p) {
+
+        p.specColor = Color.YELLOW;
+
+    }
 
 }
