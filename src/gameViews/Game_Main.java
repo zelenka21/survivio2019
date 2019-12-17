@@ -29,6 +29,10 @@ import State.PlayerStates;
 import Strategy.DropAmmo;
 import Strategy.DropHealth;
 import Strategy.IDropStrategy;
+import Visitor.DeadVisitor;
+import Visitor.LowVisitor;
+import Visitor.MegaVisitor;
+import Visitor.RegularVisitor;
 import gameObjects.*;
 import networking.Connection;
 import util.Util;
@@ -110,6 +114,10 @@ private static void tick(Facade fc) {
 			
 			//player state object
 			PlayerStates pst = new PlayerStates(eplayer);
+			DeadVisitor deadV = new DeadVisitor();
+			LowVisitor lowV = new LowVisitor();
+			MegaVisitor megaV = new MegaVisitor();
+			RegularVisitor regV = new RegularVisitor();
 			
 
 			if(eplayer.getHealth() <= 0){
@@ -135,13 +143,15 @@ private static void tick(Facade fc) {
 					for(Player hitPlayer : players) {
 						if(!proj.owner.username.equals(hitPlayer.username)) {
 							if(Util.intersects(proj.bounds(), hitPlayer.bounds()) /**&& !hitPlayer.shield.on**/) {
-								//player is hit
-//								PlayerStates pst = new PlayerStates(hitPlayer);
-//								pst.changeState();
-//								pst.changeSpeed(hitPlayer);
 								hitPlayer.takeDamage(proj.damage);
 								eplayer.liveAmmo.remove(c);
-								pst.changeState();
+								if(eplayer.getHealth() < 25){
+									if(eplayer.getHealth() < 1)
+										pst.accept(deadV);
+									else
+										pst.accept(lowV);
+								}
+
 								break;
 							}
 						}
@@ -166,21 +176,11 @@ private static void tick(Facade fc) {
 									
 								    if(strategyChooser == 1)
 									{	//will drop Ammo
-//											//IDropStrategy dropAmmo = new DropAmmo();
-//											//dropAmmo.dropItem(new AmmoPack(eplayer.cPos.x, eplayer.cPos.y, 5), map, eplayer, erx, ery);
 									fc.dropAmmo(new AmmoPack(eplayer.cPos.x, eplayer.cPos.y, 5), map, eplayer, erx, ery);
 									}
 								    else
 									{ 	//will drop health
-							//				IDropStrategy dropHP = new DropHealth();
-										//dropHP.dropItem(new HealthPack(eplayer.cPos.x, eplayer.cPos.y, 5), map, eplayer, erx, ery);
 										fc.dropHealth((HealthPack) HealthPackFactory.getHealthPack(eplayer.cPos.x, eplayer.cPos.y, getRandomHealth()), map, eplayer, erx, ery);
-										long startTime = System.currentTimeMillis();
-										for (int j = 0; j < 1000; ++j){
-											fc.dropHealth((HealthPack) HealthPackFactory.getHealthPack(eplayer.cPos.x, eplayer.cPos.y, getRandomHealth()), map, eplayer, erx, ery);
-										}
-										long endTime = System.currentTimeMillis();
-										ltss.log("Proccess took: " + (endTime - startTime) + " milliseconds.\n");
 								}
 									
 				//------------------------	--------------------------------------  ---------------------------------								
@@ -206,7 +206,10 @@ private static void tick(Facade fc) {
 				if(Util.intersects(eplayer.bounds(), item.bounds())){
 					if(item instanceof HealthPack){
 						eplayer.addHealth(((HealthPack) item).health);
-						pst.changeState();
+						if(eplayer.getHealth() < 25)
+							pst.accept(lowV);
+						else
+							pst.accept(regV);
 						map.items.remove(f);
 						continue;
 					}
@@ -227,7 +230,7 @@ private static void tick(Facade fc) {
 						eplayer.addHealth(hpItem.getHealth());
 						eplayer.hasMega = true;
 						map.hps.remove(f);
-						pst.changeState();
+						pst.accept(megaV);
 						continue;
 					
 				}
