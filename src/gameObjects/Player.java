@@ -2,6 +2,11 @@ package gameObjects;
 
 import java.util.ArrayList;
 
+import Chainofresponsibility.LocationSave;
+import Chainofresponsibility.OtherAction;
+import Chainofresponsibility.ReportAmmoAction;
+import Chainofresponsibility.ReportHPAction;
+import Chainofresponsibility.TeleportAction;
 import Decorator.DecoratedPlayer;
 import Memento.Caretaker;
 import Memento.TeleportMemento;
@@ -62,7 +67,7 @@ public class Player implements DecoratedPlayer{
 		ammo = new Ammo(new Projectile(this, cPos, pPos), 100);
 		liveAmmo = new ArrayList<Projectile>();
 		//shield = new Shield(5000, new Color(255, 153, 255));
-		health = 1;
+		health = 50;
 		totalHealth = 50;
 		speed = 2;
 		xVel = 0;
@@ -195,6 +200,17 @@ public class Player implements DecoratedPlayer{
 	}
 	
 	public void keyPressed(KeyEvent e) {
+		
+		ReportAmmoAction ra = new ReportAmmoAction();
+		ReportHPAction ot = new ReportHPAction(ra);
+		TeleportAction tp = new TeleportAction(ot);
+		LocationSave loc = new LocationSave(tp);
+		
+		int actionConst;
+		
+
+		//loc.doAction(1, this);
+		
 		switch (e.getKeyCode()) {
 			case KeyEvent.VK_S:
 				down = true;
@@ -209,20 +225,42 @@ public class Player implements DecoratedPlayer{
 				right = true;
 				break;
 			case KeyEvent.VK_R:
-				if(hasTeleport) { // save teleport state
-					hitSave();
-				}
+				actionConst=1;
+				loc.doAction(actionConst, this);
 				break;
 			case KeyEvent.VK_T://teleport
-				if(hasTeleport) {
-					hitUndo();
-					hasTeleport = false;
-					
-				}
+				actionConst=2;
+				loc.doAction(actionConst, this);
 				break;
+			case KeyEvent.VK_Y://check hp
+				actionConst=3;
+				loc.doAction(actionConst, this);
+				break;
+			case KeyEvent.VK_U://check ammo
+				actionConst=4;
+				loc.doAction(actionConst, this);
+				break;
+//			case KeyEvent.VK_R:
+//				if(hasTeleport) { // save teleport state
+//					hitSave();
+//				}
+//				break;
+//			case KeyEvent.VK_T://teleport
+//				if(hasTeleport) {
+//					hitUndo();
+//					hasTeleport = false;
+//				}
+//				break;
 		}
 		updateMovement();
+		
+		
 	}
+	
+	
+	
+	
+	
 //	//memento methods
 
 	public TeleportState save() {
