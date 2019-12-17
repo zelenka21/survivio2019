@@ -67,6 +67,27 @@ public class Player implements DecoratedPlayer{
 		left = false;
 		right = false;
 	}
+	public Player(String username, Color color,  Connection connection) {
+		this.username = username;
+		this.color =color;
+		this.connection = connection;
+		this.showMiniHUD = true;
+		
+		cPos = new Point(300,300);
+		pPos = new Point(300,300);
+		
+		ammo = new Ammo(new Projectile(this, cPos, pPos), 100);
+		liveAmmo = new ArrayList<Projectile>();
+		health = 50;
+		totalHealth = 50;
+		speed = 2;
+		xVel = 0;
+		yVel = 0;
+		up = false;
+		down = false;
+		left = false;
+		right = false;
+	}
 	@Override
 	public void setColor(Color color) {
 		// TODO Auto-generated method stub
