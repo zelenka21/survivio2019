@@ -3,6 +3,7 @@ package gameObjects;
 import java.util.ArrayList;
 
 import Adapter.IHealth;
+import NullObject.NullMap;
 import gameObjects.Boundary;
 import gameObjects.Item;
 
@@ -19,5 +20,9 @@ public class Map {
 		this.name = name;
 		//
 		this.hps = new ArrayList<IHealth>();
+		
+		if(name == null) {
+			new NullMap();
+		}
 	}
 }

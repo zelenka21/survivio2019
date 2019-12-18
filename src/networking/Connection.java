@@ -189,22 +189,26 @@ public class Connection {
 	
 	private void echoListen() {
 		Thread t = new Thread(new Runnable(){
-
+			String cmd;
 			@Override
 			public void run() {
 				
 				try{
 					while(true) {
-						
-						String cmd = client.echoIn.nextLine();
-						
+						//test
+						if(client.echoIn.hasNext())
+						{
+
+							 cmd = client.echoIn.nextLine();
+						}
+						//String cmd = client.echoIn.nextLine();
 						if (cmd.equals(RefStrings.CMD_DEREGISTERPLAYER)) {
-							
 							String username = client.echoIn.nextLine();
 							
 							for(int i = 0; i < Game_Main.players.size(); i++) {
 								if(Game_Main.players.get(i).username.equals(username)) {
 									Game_Main.players.remove(i);
+									
 									break;
 								}
 							}

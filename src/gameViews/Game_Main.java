@@ -8,11 +8,8 @@ import javax.swing.JOptionPane;
 import java.awt.EventQueue;
 import java.awt.Rectangle;
 import java.io.File;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.nio.file.Paths;
 
-import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -25,6 +22,8 @@ import Decorator.PlayerSizer;
 import Decorator.PlayerSkin;
 import Facade.Facade;
 import Flyweight.HealthPackFactory;
+import NullObject.IMap;
+import NullObject.NullMap;
 import State.PlayerStates;
 import Strategy.DropAmmo;
 import Strategy.DropHealth;
@@ -49,6 +48,9 @@ public class Game_Main {
 	public static int erx=0;
 	public static int ery=0;
 	public static Map map;
+	public static int playerCount=0;
+
+	public static IMap _map;
 	
 	public static int fps;
 
@@ -58,8 +60,7 @@ public class Game_Main {
 
 
 		Facade fc = new Facade();
-
-        String userN = JOptionPane.showInputDialog(null, "Enter Username: ");
+		String userN = JOptionPane.showInputDialog(null, "Enter Username: ");
   
 		erx = getRandomInt(5, 100);
 		ery = getRandomInt(5, 100);
@@ -67,6 +68,7 @@ public class Game_Main {
 		player = new Player(userN, new Connection());
 		players = new ArrayList<Player>();
 		players.add(player);
+		playerCount++;
 		//
 		loadMap();
 
@@ -99,6 +101,7 @@ public class Game_Main {
 		}
 		 
 		if(mapFile == null) {
+			//_map = new NullMap();
 			map = new Map(new ArrayList<Boundary>(), new ArrayList<Item>(), "null");
 		} else {
 			map = MapLoader.load(mapFile.toPath());
@@ -107,6 +110,8 @@ public class Game_Main {
 
 	
 private static void tick(Facade fc) {
+	
+		
 
 		for(int i = 0; i < players.size(); i++) {
 
@@ -122,17 +127,22 @@ private static void tick(Facade fc) {
 
 			if(eplayer.getHealth() <= 0){
 				players.remove(i);
+				 Game_Main.window.connectionTextArea.append("--------GAME OVER-------------\n");
+				 Game_Main.window.connectionTextArea.append(eplayer.username + " LOST ");
 				continue;
 			}
 			
 			eplayer.move();
 			
-			if(eplayer.cPos.x != eplayer.pPos.x || 
-			   eplayer.cPos.y != eplayer.pPos.y && 
-			   eplayer.username.equals(player.username)){
-				
+//			if(eplayer.cPos.x != eplayer.pPos.x || 
+//			   eplayer.cPos.y != eplayer.pPos.y && 
+//			   eplayer.username.equals(player.username)){
+//				
+//				eplayer.connection.echoPosition();
+//			}
+			//echo constantly
+			if( eplayer.username.equals(player.username))
 				eplayer.connection.echoPosition();
-			}
 			
 			ArrayList<Projectile> projs = eplayer.liveAmmo;
 			
@@ -146,12 +156,13 @@ private static void tick(Facade fc) {
 								hitPlayer.takeDamage(proj.damage);
 								eplayer.liveAmmo.remove(c);
 								if(eplayer.getHealth() < 25){
-									if(eplayer.getHealth() < 1)
+									if(eplayer.getHealth() < 1) {
 										pst.accept(deadV);
+
+									}
 									else
 										pst.accept(lowV);
 								}
-
 								break;
 							}
 						}

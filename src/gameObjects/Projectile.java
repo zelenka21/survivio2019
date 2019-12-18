@@ -34,7 +34,7 @@ public class Projectile {
 		this.sizeY = 2;
 		color = Color.YELLOW;	
 		lifeTime = 700;
-		damage = 1;
+		damage = 5;
 	}
 	
 	private double getAngle() {
